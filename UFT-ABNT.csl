@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" default-locale="pt-BR">
+  <info>
+    <title>UFT - ABNT (Universidade Federal do Tocantins)</title>
+    <title-short>UFT-ABNT</title-short>
+    <id>http://www.zotero.org/styles/uft-abnt</id>
+    <link href="http://www.zotero.org/styles/uft-abnt" rel="self"/>
+    <link href="https://sistemas.uft.edu.br/ficha" rel="documentation"/>
+    <author>
+      <name>Sistema de Bibliotecas UFT</name>
+      <email>biblioteca@uft.edu.br</email>
+    </author>
+    <category citation-format="author-date"/>
+    <category field="generic-base"/>
+    <summary>Estilo de citação e referências baseado no Manual de Normalização da UFT (2ª edição, 2022), seguindo as normas ABNT NBR 6023:2018 e NBR 10520:2002</summary>
+    <updated>2025-12-06T21:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <locale xml:lang="pt-BR">
+    <terms>
+      <term name="editor" form="short">
+        <single>ed.</single>
+        <multiple>eds.</multiple>
+      </term>
+      <term name="page" form="short">
+        <single>p.</single>
+        <multiple>p.</multiple>
+      </term>
+      <term name="volume" form="short">v.</term>
+      <term name="edition" form="short">ed.</term>
+      <term name="accessed">Acesso em</term>
+      <term name="available-at">Disponível em</term>
+    </terms>
+  </locale>
+
+  <!-- MACROS -->
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " 
+            delimiter="; " delimiter-precedes-last="always" 
+            form="long">
+        <name-part name="family" text-case="uppercase"/>
+        <name-part name="given" text-case="capitalize-first"/>
+      </name>
+      <et-al term="et-al" font-style="italic"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text macro="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" name-as-sort-order="all" sort-separator=", " 
+            delimiter="; " delimiter-precedes-last="always">
+        <name-part name="family" text-case="uppercase"/>
+      </name>
+      <et-al term="et-al" font-style="italic"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="book thesis" match="any">
+        <text variable="title" font-weight="bold"/>
+        <text variable="subtitle" prefix=": "/>
+      </if>
+      <else>
+        <text variable="title"/>
+        <text variable="subtitle" prefix=": "/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="publisher">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <macro name="year-date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="[s.d.]"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="access">
+    <choose>
+      <if variable="URL">
+        <group delimiter=". ">
+          <group delimiter=": ">
+            <text term="available-at"/>
+            <text variable="URL"/>
+          </group>
+          <group delimiter=": ">
+            <text term="accessed"/>
+            <date variable="accessed">
+              <date-part name="day" suffix=" "/>
+              <date-part name="month" form="short" suffix=" " strip-periods="false"/>
+              <date-part name="year"/>
+            </date>
+          </group>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="locators">
+    <group delimiter=", ">
+      <group>
+        <text variable="volume" prefix="v. "/>
+      </group>
+      <group>
+        <text variable="issue" prefix="n. "/>
+      </group>
+      <group>
+        <text variable="page" prefix="p. "/>
+      </group>
+    </group>
+  </macro>
+
+  <!-- CITAÇÕES NO TEXTO -->
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" 
+            collapse="year" givenname-disambiguation-rule="by-cite">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-short"/>
+        <text macro="year-date"/>
+        <group>
+          <label variable="locator" form="short"/>
+          <text variable="locator"/>
+        </group>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- BIBLIOGRAFIA/REFERÊNCIAS -->
+  <bibliography hanging-indent="false" et-al-min="4" et-al-use-first="1" 
+                entry-spacing="1" line-spacing="1">
+    <sort>
+      <key macro="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=". ">
+        <!-- Autor -->
+        <text macro="author"/>
+
+        <!-- Título -->
+        <text macro="title"/>
+
+        <!-- Informações específicas por tipo -->
+        <choose>
+          <!-- Livro -->
+          <if type="book">
+            <group delimiter=". ">
+              <text macro="edition"/>
+              <group delimiter=", ">
+                <text macro="publisher"/>
+                <text macro="year-date"/>
+              </group>
+              <text variable="number-of-pages" suffix=" p."/>
+            </group>
+          </if>
+
+          <!-- Capítulo de livro -->
+          <else-if type="chapter">
+            <group delimiter=". ">
+              <group delimiter=": ">
+                <text value="In"/>
+                <names variable="editor">
+                  <name name-as-sort-order="all" sort-separator=", " 
+                        delimiter="; " form="long">
+                    <name-part name="family" text-case="uppercase"/>
+                    <name-part name="given"/>
+                  </name>
+                  <label form="short" prefix=" (" suffix=".)"/>
+                </names>
+              </group>
+              <text variable="container-title" font-weight="bold"/>
+              <text macro="edition"/>
+              <group delimiter=", ">
+                <text macro="publisher"/>
+                <text macro="year-date"/>
+              </group>
+              <text variable="page" prefix="p. "/>
+            </group>
+          </else-if>
+
+          <!-- Artigo de periódico -->
+          <else-if type="article-journal">
+            <group delimiter=", ">
+              <text variable="container-title" font-weight="bold"/>
+              <text variable="publisher-place"/>
+              <text macro="locators"/>
+              <text macro="year-date"/>
+            </group>
+          </else-if>
+
+          <!-- Tese/Dissertação -->
+          <else-if type="thesis">
+            <group delimiter=". ">
+              <text variable="genre"/>
+              <group delimiter=" - ">
+                <group delimiter=", ">
+                  <text variable="publisher"/>
+                  <text variable="publisher-place"/>
+                </group>
+                <text macro="year-date"/>
+              </group>
+            </group>
+          </else-if>
+
+          <!-- Padrão para outros tipos -->
+          <else>
+            <group delimiter=", ">
+              <text macro="publisher"/>
+              <text macro="year-date"/>
+            </group>
+          </else>
+        </choose>
+
+        <!-- Acesso online -->
+        <text macro="access"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
